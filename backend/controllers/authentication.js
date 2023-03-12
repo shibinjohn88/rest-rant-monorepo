@@ -6,10 +6,11 @@ const jwt = require('json-web-token')
 const { User } = db
 
 router.post('/', async (req, res) => {
-    console.log(req.body.email)
+
     let user = await User.findOne({
         where: { email: req.body.email }
     })
+
 
     if (!user || !await bcrypt.compare(req.body.password, user.passwordDigest)) {
         res.status(404).json({ 
@@ -18,6 +19,7 @@ router.post('/', async (req, res) => {
     } else {
         const result = await jwt.encode(process.env.JWT_SECRET, { id: user.userId })
         res.json({ user: user, token: result.value })
+        console.log('response send: '+ result.value)
     }
 })
 
