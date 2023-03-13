@@ -58,6 +58,12 @@ function Navigation() {
                 </li>
                 {addPlaceButton}
                 {loginActions}
+                <li>
+                <button onClick={() => {
+                    localStorage.removeItem('token')
+                    history.push("/")
+                    }}>Log out</button>
+                </li>
             </ul>
         </nav>
     )
